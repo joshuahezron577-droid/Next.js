@@ -11,7 +11,6 @@
    <main className="bg-black min-h-screen text-white">
       
       {/* NAVBAR */}
-     {/* NAVBAR ILIYOKAMILIKA */}
 <nav className="fixed w-full z-50 flex justify-between items-center px-10 py-6 bg-black/80 backdrop-blur-md">
   <div className="text-2xl font-bold tracking-tighter">YA KWETU</div>
   
@@ -56,8 +55,6 @@
           </div>
         </div>
       </section>
-
-      {/* Hapa ndipo tutaendelea kuongeza section ya 'About' inayofuata... */}
       {/* ABOUT US SECTION */}
       <section id="about" className="py-24 px-10 bg-black text-white">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
@@ -69,9 +66,7 @@
               alt="About Ya Kwetu Gym" 
               className="rounded-3xl w-full h-500px object-cover shadow-2xl" 
             />
-          </div>
-
-          {/* Maelezo ya About Us */}
+          </div>          {/* Maelezo ya About Us */}
           <div className="w-full md:w-1/2">
             <p className="text-red-500 font-bold uppercase tracking-widest text-sm mb-2">● Who We Are</p>
             <h2 className="text-5xl font-bold mb-6 leading-tight">MORE THAN JUST A GYM</h2>
