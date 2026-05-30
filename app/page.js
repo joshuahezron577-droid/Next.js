@@ -83,7 +83,28 @@
         </div>
       </section>
     </main>
-
+{/* SERVICES SECTION */}
+      <section id="services" className="py-24 px-10 bg-gray-900">
+        <div className="max-w-7xl mx-auto text-center">
+          <p className="text-red-500 font-bold uppercase tracking-widest text-sm mb-2">● Our Expertise</p>
+          <h2 className="text-5xl font-bold mb-16">WHAT WE OFFER</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-black p-8 rounded-2xl border border-gray-800 hover:border-red-600 transition">
+              <h3 className="text-2xl font-bold mb-4">Personal Training</h3>
+              <p className="text-gray-400">One-on-one coaching to help you reach your specific fitness goals.</p>
+            </div>
+            <div className="bg-black p-8 rounded-2xl border border-gray-800 hover:border-red-600 transition">
+              <h3 className="text-2xl font-bold mb-4">Group Classes</h3>
+              <p className="text-gray-400">High-energy classes designed to push you beyond your limits.</p>
+            </div>
+            <div className="bg-black p-8 rounded-2xl border border-gray-800 hover:border-red-600 transition">
+              <h3 className="text-2xl font-bold mb-4">Nutrition Plan</h3>
+              <p className="text-gray-400">Customized meal plans to fuel your progress and recovery.</p>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   )
 }
