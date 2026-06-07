@@ -58,10 +58,10 @@ const reviews = [
    <main className="bg-base-300 min-h-screen text-white">
       
       {/* NAVBAR */}
-<nav className="fixed w-full z-50 flex justify-between items-center px-10 py-6 bg-black/80 backdrop-blur-md">
+<nav className="fixed left-0 right-0 top-0 z-50 mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-4 md:px-8 lg:px-10 bg-black/70 backdrop-blur-md rounded-b-2xl border border-white/5 shadow-lg">
   <div className="text-2xl font-bold tracking-tighter"></div>
-  
-  <div className="hidden md:flex space-x-6 font-medium text-sm">
+
+  <div className="hidden md:flex flex-1 items-center justify-center gap-4 lg:gap-6 font-medium text-xs lg:text-sm">
     <a href="#home" className="hover:text-red-500 transition">Home</a>
     <a href="#programs" className="hover:text-red-500 transition">Our Programs</a>
     <a href="#team" className="hover:text-red-500 transition">Our Team</a>
@@ -71,16 +71,19 @@ const reviews = [
     <a href="#contact" className="hover:text-red-500 transition">Contact us</a>
   </div>
  {/*  */}
- <div className="flex items-center gap-6">
+ <div className="flex items-center gap-2 md:gap-3">
         {/* Link ya Sign In */}
-        <Link href="/sign-in" className="text-zinc-400 hover:text-white transition-colors">
+        <Link 
+          href="/join-now" 
+          className="bg-red-600 hover:bg-red-700 text-white font-bold py-1.5 px-3 md:px-4 rounded-md transition-all hover:scale-105 text-xs md:text-sm"
+        >
           Sign In
         </Link>
 
         {/* Link ya Join Now */}
         <Link 
           href="/join-now" 
-          className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-md transition-all hover:scale-105"
+          className="bg-red-600 hover:bg-red-700 text-white font-bold py-1.5 px-3 md:px-4 rounded-md transition-all hover:scale-105 text-xs md:text-sm"
         >
           Join Now
         </Link>
@@ -196,7 +199,7 @@ const reviews = [
             {[
               ['Image-A.jpg', 'Coach Jay', 'Strength Coach'],
               ['Image-B.jpg', 'Coach Nia', 'Cardio Specialist'],
-              ['Image-A.jpg', 'Coach Leo', 'Recovery Expert'],
+              ['Image-C.jpg', 'Coach Leo', 'Recovery Expert'],
             ].map(([image, name, role]) => (
               <article
                 key={name}
