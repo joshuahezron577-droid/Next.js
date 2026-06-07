@@ -70,55 +70,21 @@ const reviews = [
     <a href="#contact" className="hover:text-red-500 transition">Contact us</a>
   </div>
 
- <button className="btn rounded-md border border-red-500/40 bg-red-500/90 text-white shadow-sm transition duration-300 hover:scale-105 hover:bg-red-400" onClick={()=>document.getElementById('my_modal_4').showModal()}>Sign In</button>
+ <div className="flex items-center gap-4">
+  {/* Button ya Sign In (Secondary) */}
+  <a href="/sign-in" className="btn btn-ghost text-white hover:bg-white/10 rounded-md">
+    Sign In
+  </a>
 
- <dialog id="my_modal_4" className="modal">
-  <div className="modal-box w-11/12 max-w-lg text-black">
-    {/* Header */}
-    <div className="flex justify-between items-center mb-6">
-      <h3 className="font-bold text-xl">Sign in to our platform</h3>
-      <form method="dialog">
-        <button className="btn btn-sm btn-circle btn-ghost">✕</button>
-      </form>
-    </div>
-
-    {/* Form Content */}
-    <div className="space-y-4">
-      <div>
-        <p className="mb-2">Your email</p>
-        <input 
-          type="email" 
-          placeholder="example@company.com" 
-          className="input input-bordered w-full bg-gray-50" 
-        />
-      </div>
-
-      <div>
-        <p className="mb-2">Your password</p>
-        <input 
-          type="password" 
-          placeholder="••••••••" 
-          className="input input-bordered w-full border-blue-500 focus:outline-blue-500" 
-        />
-      </div>
-
-      <div className="flex justify-between items-center pt-2">
-        <label className="flex items-center gap-2 cursor-pointer">
-          <input type="checkbox" className="checkbox checkbox-sm" />
-          <span className="text-sm">Remember me</span>
-        </label>
-        <a href="#" className="text-sm text-blue-600 hover:underline">Lost Password?</a>
-      </div>
-
-      <div className="pt-4">
-        <button className="btn btn-primary w-full bg-blue-600 border-blue-600 hover:bg-blue-700">
-          Login to your account
-        </button>
-      </div>
-    </div>
-  </div>
-</dialog>
-</nav>
+  {/* Button ya Join Now (Primary) */}
+  <a href="/join" className="btn bg-red-600 hover:bg-red-700 text-white border-none rounded-md px-6">
+    Join Now
+  </a>
+</div>
+ 
+ 
+ </nav>
+  
       {/* HOME */}
       <section id="home" className="relative h-screen flex flex-col justify-center items-center text-center" >
         <div className="absolute inset-0 z-0">
@@ -348,7 +314,7 @@ const reviews = [
 {/* Contact us */}
 <section id="contact" className="relative overflow-hidden bg-zinc-950/95 py-20 px-6 text-white">
   <div className="mx-auto max-w-6xl text-center">
-    <p className="text-sm uppercase tracking-[0.35em] text-red-400">Contact</p>
+    <p className="text-sm uppercase tracking-[0.35em] text-red-400">Contact us</p>
     <h2 className="mt-3 text-3xl font-black md:text-5xl text-white">Get in touch</h2>
     <p className="mx-auto mt-4 max-w-2xl text-zinc-200">Reach out for support, membership, or training questions.</p>
     
