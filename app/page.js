@@ -1,110 +1,443 @@
     "use client"
    import Script from 'next/script';
-    import { motion } from "motion/react"
-    import { Card, Button } from "flowbite-react";
+    import { motion, AnimatePresence } from "framer-motion";
     import { useState, useEffect } from 'react';
+     const sentences = [
+  "Transforming your physique,",
+  "Building sustainable strength,",
+  "Reaching your peak fitness potential."
+]; 
+
+const reviews = [
+  {
+    quote: "The coaching feels personal and motivating. I have seen real progress in just a few weeks.",
+    name: "Sarah M.",
+    since: "Member since 2023",
+  },
+  {
+    quote: "This gym gives me structure, energy, and the push I needed to stay consistent.",
+    name: "Daniel K.",
+    since: "Member since 2021",
+  },
+  {
+    quote: "Every session is focused, professional, and helps me feel stronger every day.",
+    name: "Aisha T.",
+    since: "Member since 2003",
+  },
+];
+
   export default function Home() {
-     
+   const [index, setIndex] = useState(0);
+   const [reviewIndex, setReviewIndex] = useState(0);
+
+  const nextReview = () => {
+    setReviewIndex((prev) => (prev + 1) % reviews.length);
+  };
+
+  const prevReview = () => {
+    setReviewIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % sentences.length);
+    }, 2500);
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setReviewIndex((prev) => (prev + 1) % reviews.length);
+    }, 3200);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <>
-   <main className="bg-black min-h-screen text-white">
+   <main className="bg-base-300 min-h-screen text-white">
       
       {/* NAVBAR */}
 <nav className="fixed w-full z-50 flex justify-between items-center px-10 py-6 bg-black/80 backdrop-blur-md">
-  <div className="text-2xl font-bold tracking-tighter">YA KWETU</div>
+  <div className="text-2xl font-bold tracking-tighter"></div>
   
   <div className="hidden md:flex space-x-6 font-medium text-sm">
-    <a href="#about" className="hover:text-red-500 transition">About</a>
-    <a href="#services" className="hover:text-red-500 transition">Services</a>
-    <a href="#programs" className="hover:text-red-500 transition">Programs</a>
-    <a href="#team" className="hover:text-red-500 transition">Team</a>
-    <a href="#testimonials" className="hover:text-red-500 transition">Reviews</a>
+    <a href="#home" className="hover:text-red-500 transition">Home</a>
+    <a href="#programs" className="hover:text-red-500 transition">Our Programs</a>
+    <a href="#team" className="hover:text-red-500 transition">Our Team</a>
+    <a href="#benefits" className="hover:text-red-500 transition">Why choose us</a>
+    <a href="#reviews" className="hover:text-red-500 transition">Reviews</a>
     <a href="#faq" className="hover:text-red-500 transition">FAQ</a>
-    <a href="#contact" className="hover:text-red-500 transition">Contact</a>
+    <a href="#contact" className="hover:text-red-500 transition">Contact us</a>
   </div>
 
-  <a href="/sign-in" className="bg-red-600 px-6 py-2 rounded-full font-bold text-sm hover:bg-red-700 transition">
-    Sign In
-  </a>
-</nav>
+ <button className="btn rounded-md border border-red-500/40 bg-red-500/90 text-white shadow-sm transition duration-300 hover:scale-105 hover:bg-red-400" onClick={()=>document.getElementById('my_modal_4').showModal()}>Sign In</button>
 
-      {/* HERO SECTION */}
-      <section id="hero" className="relative h-screen flex flex-col justify-center items-center text-center">
+ <dialog id="my_modal_4" className="modal">
+  <div className="modal-box w-11/12 max-w-lg text-black">
+    {/* Header */}
+    <div className="flex justify-between items-center mb-6">
+      <h3 className="font-bold text-xl">Sign in to our platform</h3>
+      <form method="dialog">
+        <button className="btn btn-sm btn-circle btn-ghost">✕</button>
+      </form>
+    </div>
+
+    {/* Form Content */}
+    <div className="space-y-4">
+      <div>
+        <p className="mb-2">Your email</p>
+        <input 
+          type="email" 
+          placeholder="example@company.com" 
+          className="input input-bordered w-full bg-gray-50" 
+        />
+      </div>
+
+      <div>
+        <p className="mb-2">Your password</p>
+        <input 
+          type="password" 
+          placeholder="••••••••" 
+          className="input input-bordered w-full border-blue-500 focus:outline-blue-500" 
+        />
+      </div>
+
+      <div className="flex justify-between items-center pt-2">
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" className="checkbox checkbox-sm" />
+          <span className="text-sm">Remember me</span>
+        </label>
+        <a href="#" className="text-sm text-blue-600 hover:underline">Lost Password?</a>
+      </div>
+
+      <div className="pt-4">
+        <button className="btn btn-primary w-full bg-blue-600 border-blue-600 hover:bg-blue-700">
+          Login to your account
+        </button>
+      </div>
+    </div>
+  </div>
+</dialog>
+</nav>
+      {/* HOME */}
+      <section id="home" className="relative h-screen flex flex-col justify-center items-center text-center" >
         <div className="absolute inset-0 z-0">
           <img src="/Images/Image-A.jpg" alt="Gym" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black/70"></div>
+          <div className="absolute inset-0 bg-black/15"></div>
         </div>
 
-        <div className="relative z-10 px-4">
-          <p className="text-red-500 uppercase tracking-widest text-sm mb-4 font-bold">● Premium Fitness Center</p>
-          <h1 className="text-6xl md:text-8xl font-bold mb-6 tracking-tight">
-            FORGE YOUR <span className="text-red-600">LEGACY</span>
+        <div className="relative z-10 px-4 mt-30">
+          <p className="text-red-500 uppercase tracking-widest text-2xl mb-4 font-bold">Welcome to ya kwetu fitness gyme</p>
+          <h1 className="text-2xl md:text-5xl font-bold mb-6 tracking-tight">
+            Train hard. Stay strong. Become unstoppable.
           </h1>
-          <p className="max-w-xl mx-auto text-lg mb-8 text-gray-300">
-            Where champions are made. World-class equipment and elite trainers pushing you to your limits.
+          <p className="max-w-xl mx-auto text-2xl mb-6 text-white">
+            Where champions are made. We help you in<span className='text-white-300 text-3xl'>;</span>
           </p>
-          
-          <div className="flex gap-4 justify-center">
-            <a href="#programs" className="border border-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-black transition">
-              Join now
-            </a>
-            <a href="#programs" className="border border-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-black transition">
-              Explore Programs
-            </a>
+          <div className="flex justify-center items-center h-5 overflow-hidden text-red-600">
+      <AnimatePresence mode="wait">
+        <motion.p
+          key={index}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.5 }}
+          className="text-2xl text-red-600"
+        >
+          {sentences[index]}
+        </motion.p>
+      </AnimatePresence>
+    </div>
+
+<div className="flex gap-4 justify-center mt-5">
+  <a href="#contact" className="border border-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-black transition">
+    Join now
+  </a>
+  <a href="#programs" className="border border-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-black transition">
+    Explore programs
+  </a>
+</div>
+
+<div className="mt-6 flex flex-wrap justify-center gap-4 text-center text-white">
+  <div className="w-44 rounded-3xl bg-zinc-900/80 p-4 border border-white/5">
+    <div className="p-4">
+      <p className="text-3xl font-black text-red-400">500+</p>
+      <p className="mt-1 text-[11px] uppercase tracking-[0.28em] text-white/90">Active members</p>
+    </div>
+  </div>
+
+  <div className="w-44 rounded-3xl bg-zinc-900/80 p-4 border border-white/5">
+    <div className="p-4">
+      <p className="text-3xl font-black text-red-400">20</p>
+      <p className="mt-1 text-[11px] uppercase tracking-[0.28em] text-white/90">Expert trainers</p>
+    </div>
+  </div>
+
+  <div className="w-44 rounded-3xl bg-zinc-900/80 p-4 border border-white/5">
+    <div className="p-4">
+      <p className="text-3xl font-black text-red-400">24/7</p>
+      <p className="mt-1 text-[11px] uppercase tracking-[0.28em] text-white/90">Support & access</p>
+    </div>
+  </div>
+</div>
+        </div>
+      </section>
+{/* Our programs */}
+ <section id="programs" className="relative overflow-hidden bg-zinc-950/95 py-20 px-6 text-white">
+        <div className="mx-auto max-w-7xl text-center">
+          <p className="text-sm uppercase tracking-[0.35em] text-red-400">Our programs</p>
+          <h2 className="mt-3 text-3xl font-black md:text-5xl text-white">What we offer</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-zinc-200">Simple, powerful fitness services built to help you train stronger, recover better, and stay consistent.</p>
+
+          <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+            {[
+              ['⚡', 'Strength Training', 'Build muscle, improve posture, and become stronger every week.'],
+              ['🏃', 'Cardio Burn', 'Boost stamina and endurance with focused heart-pumping sessions.'],
+              ['🧠', 'Recovery Flow', 'Recharge with guided recovery routines and mobility support.'],
+              ['🍎', 'Wellness Coaching', 'Stay consistent with expert advice, nutrition tips, and progress tracking.'],
+              ['🏋️', 'Power Lift', 'Develop explosive strength with disciplined lifting plans and coaching.'],
+              ['🧘', 'Mobility Flow', 'Improve flexibility, posture, and recovery through guided movement sessions.'],
+              ['💧', 'Hydration & Fuel', 'Track your energy, hydration, and nutrition habits for better performance.'],
+              ['📈', 'Progress Tracking', 'Follow your weekly improvements with clear goals and measurable results.'],
+            ].map(([icon, title, text]) => (
+              <article
+                key={title}
+                className="group h-full rounded-3xl border border-white/10 bg-zinc-900 p-3 shadow-[0_16px_30px_rgba(0,0,0,0.35)] transition duration-300 hover:-translate-y-1 hover:border-red-400/40 hover:shadow-[0_20px_35px_rgba(255,0,0,0.14)]"
+              >
+                <div className="flex h-full flex-col rounded-2xl bg-zinc-800/90 p-5 text-left transition duration-300 group-hover:bg-zinc-800">
+                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-red-500/10 text-xl text-red-300 shadow-inner">{icon}</div>
+                  <h3 className="text-xl font-bold text-white">{title}</h3>
+                  <p className="mt-2 flex-1 text-sm text-zinc-200">{text}</p>
+                  <span className="mt-4 text-xs uppercase tracking-[0.25em] text-red-300">Included</span>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
-      {/* ABOUT US SECTION */}
-      <section id="about" className="py-24 px-10 bg-black text-white">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
-          
-          {/* Picha ya About Us */}
-          <div className="w-full md:w-1/2">
-            <img 
-              src="/Images/Image-B.jpg" 
-              alt="About Ya Kwetu Gym" 
-              className="rounded-3xl w-full h-500px object-cover shadow-2xl" 
-            />
-          </div>          {/* Maelezo ya About Us */}
-          <div className="w-full md:w-1/2">
-            <p className="text-red-500 font-bold uppercase tracking-widest text-sm mb-2">● Who We Are</p>
-            <h2 className="text-5xl font-bold mb-6 leading-tight">MORE THAN JUST A GYM</h2>
-            <p className="text-gray-400 text-lg mb-6 leading-relaxed">
-              Ya Kwetu Gym ni zaidi ya vifaa vya mazoezi. Sisi ni jamii ya watu wanaojituma, tunaoamini katika nidhamu, nguvu, na mabadiliko. 
-            </p>
-            <p className="text-gray-400 text-lg mb-8 leading-relaxed">
-              Tuna vifaa vya kisasa na wakufunzi waliobobea kuhakikisha unakamilisha malengo yako ya kiafya na kimwili kwa haraka na usalama.
-            </p>
-            <button className="bg-white text-black px-8 py-3 rounded-full font-bold hover:bg-red-600 hover:text-white transition">
-              Learn Our Story
-            </button>
+
+{/* Our trainers */}
+ <section id="team" className="relative overflow-hidden bg-zinc-950/95 py-20 px-6 text-white">
+        <div className="mx-auto max-w-7xl text-center">
+          <p className="text-sm uppercase tracking-[0.35em] text-red-400">Our team</p>
+          <h2 className="mt-3 text-3xl font-black md:text-5xl text-white">Meet the experts trainers</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-zinc-200">Dedicated trainers, coaches, and wellness experts ready to guide you every step of the way.</p>
+
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {[
+              ['Image-A.jpg', 'Coach Jay', 'Strength Coach'],
+              ['Image-B.jpg', 'Coach Nia', 'Cardio Specialist'],
+              ['Image-A.jpg', 'Coach Leo', 'Recovery Expert'],
+            ].map(([image, name, role]) => (
+              <article
+                key={name}
+                className="overflow-hidden rounded-3xl border border-white/10 bg-zinc-900 shadow-[0_18px_35px_rgba(0,0,0,0.35)] transition duration-300 hover:-translate-y-1 hover:border-red-400/40"
+              >
+                <img src={`/Images/${image}`} alt={name} className="h-72 w-full object-cover" />
+                <div className="p-5 text-left">
+                  <h3 className="text-xl font-bold text-white">{name}</h3>
+                  <p className="mt-1 text-sm uppercase tracking-[0.25em] text-red-300">{role}</p>
+                  <p className="mt-3 text-sm text-zinc-200">Professional trainer focused on results, discipline, and strong coaching.</p>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
-    </main>
-{/* SERVICES SECTION */}
-      <section id="services" className="py-24 px-10 bg-gray-900">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="text-red-500 font-bold uppercase tracking-widest text-sm mb-2">● Our Expertise</p>
-          <h2 className="text-5xl font-bold mb-16">WHAT WE OFFER</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-black p-8 rounded-2xl border border-gray-800 hover:border-red-600 transition">
-              <h3 className="text-2xl font-bold mb-4">Personal Training</h3>
-              <p className="text-gray-400">One-on-one coaching to help you reach your specific fitness goals.</p>
+
+      {/* Extra programs section */}
+      <section id="benefits" className="relative overflow-hidden bg-zinc-950/95 py-20 px-6 text-white">
+        <div className="mx-auto max-w-6xl text-center">
+          <p className="text-sm uppercase tracking-[0.35em] text-red-400">Why choose us</p>
+          <h2 className="mt-3 text-3xl font-black md:text-5xl text-white">Built for real progress</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-zinc-200">A simple, balanced fitness experience with expert coaching, structure, and motivation to help you stay consistent.</p>
+
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {[
+              ['🔥', 'Focused Training', 'Clear routines and smart guidance to keep every session effective.'],
+              ['💪', 'Strength & Conditioning', 'Build power, stability, and confidence through disciplined workouts.'],
+              ['🌟', 'Long-Term Results', 'Stay motivated with progress-focused coaching and sustainable habits.'],
+            ].map(([icon, title, text]) => (
+              <article key={title} className="rounded-3xl border border-white/10 bg-zinc-900 p-6 text-left shadow-[0_18px_35px_rgba(0,0,0,0.35)]">
+                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-red-500/10 text-xl text-red-300">{icon}</div>
+                <h3 className="text-xl font-bold text-white">{title}</h3>
+                <p className="mt-2 text-sm text-zinc-200">{text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Review */}
+      <section id="reviews" className="relative overflow-hidden bg-zinc-950/95 py-20 px-6 text-white">
+        <div className="mx-auto max-w-6xl text-center">
+          <p className="text-sm uppercase tracking-[0.35em] text-red-400">Reviews</p>
+          <h2 className="mt-3 text-3xl font-black md:text-5xl text-white">What our members say</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-zinc-200">Real feedback from people who trust our training, support, and results-driven approach.</p>
+
+          <div className="mt-10 flex flex-col items-center justify-center rounded-3xl bg-neutral-950 p-6 font-sans shadow-[0_18px_35px_rgba(0,0,0,0.35)]">
+            <div className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-neutral-800 bg-[#1a1a1a] p-8 shadow-2xl md:p-12">
+              <motion.div
+                className="flex"
+                animate={{ x: `-${reviewIndex * 100}%` }}
+                transition={{ duration: 0.6, ease: 'easeInOut' }}
+              >
+                {reviews.map((item) => (
+                  <article key={item.name} className="min-w-full text-center">
+                    <div className="mb-6 flex justify-center gap-1 text-xl text-amber-400">★★★★★</div>
+                    <blockquote className="mb-10">
+                      <p className="text-lg italic leading-relaxed text-neutral-400 md:text-xl">“{item.quote}”</p>
+                    </blockquote>
+                    <div className="flex flex-col items-center">
+                      <div className="mb-4 flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border border-red-500 bg-red-600">
+                        <span className="text-xs font-bold text-white">IMG</span>
+                      </div>
+                      <h3 className="text-lg font-bold tracking-wide text-white">{item.name}</h3>
+                      <p className="text-sm text-neutral-500">{item.since}</p>
+                    </div>
+                  </article>
+                ))}
+              </motion.div>
             </div>
-            <div className="bg-black p-8 rounded-2xl border border-gray-800 hover:border-red-600 transition">
-              <h3 className="text-2xl font-bold mb-4">Group Classes</h3>
-              <p className="text-gray-400">High-energy classes designed to push you beyond your limits.</p>
-            </div>
-            <div className="bg-black p-8 rounded-2xl border border-gray-800 hover:border-red-600 transition">
-              <h3 className="text-2xl font-bold mb-4">Nutrition Plan</h3>
-              <p className="text-gray-400">Customized meal plans to fuel your progress and recovery.</p>
+
+            <div className="mt-8 flex items-center gap-6">
+              <button onClick={prevReview} className="flex h-12 w-12 items-center justify-center rounded-full border border-neutral-800 text-white transition-colors hover:bg-neutral-800 cursor-pointer">←</button>
+              <div className="flex gap-2">
+                {reviews.map((item, index) => (
+                  <button
+                    key={item.name}
+                    onClick={() => setReviewIndex(index)}
+                    className={`h-2.5 w-2.5 rounded-full ${reviewIndex === index ? 'bg-red-500' : 'bg-neutral-700'}`}
+                    aria-label={`Go to review ${index + 1}`}
+                  />
+                ))}
+              </div>
+              <button onClick={nextReview} className="flex h-12 w-12 items-center justify-center rounded-full border border-neutral-800 text-white transition-colors hover:bg-neutral-800 cursor-pointer">→</button>
             </div>
           </div>
         </div>
       </section>
+  {/* FAQ */}
+  <section id="faq" className="relative overflow-hidden bg-zinc-950/95 py-20 px-6 text-white">
+        <div className="mx-auto max-w-6xl text-center">
+          <p className="text-sm uppercase tracking-[0.35em] text-red-400">FAQ</p>
+          <h2 className="mt-3 text-3xl font-black md:text-5xl text-white">Frequently asked questions</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-zinc-200">Short answers about our gym, training, and support.</p>
+
+          <div className="mx-auto mt-10 max-w-3xl space-y-4 text-left">
+            <div className="collapse collapse-plus rounded-2xl border border-white/10 bg-zinc-900 text-white shadow-[0_18px_35px_rgba(0,0,0,0.35)]">
+              <input type="radio" name="faq-accordion" defaultChecked />
+              <div className="collapse-title text-base font-semibold text-white">Do you offer 24/7 gym access?</div>
+              <div className="collapse-content text-sm text-zinc-200">Yes, members can train whenever it suits them with flexible access and support.</div>
+            </div>
+
+            <div className="collapse collapse-plus rounded-2xl border border-white/10 bg-zinc-900 text-white shadow-[0_18px_35px_rgba(0,0,0,0.35)]">
+              <input type="radio" name="faq-accordion" />
+              <div className="collapse-title text-base font-semibold text-white">Do you have expert trainers?</div>
+              <div className="collapse-content text-sm text-zinc-200">Yes, our coaches guide every session with simple, effective fitness support.</div>
+            </div>
+
+            <div className="collapse collapse-plus rounded-2xl border border-white/10 bg-zinc-900 text-white shadow-[0_18px_35px_rgba(0,0,0,0.35)]">
+              <input type="radio" name="faq-accordion" />
+              <div className="collapse-title text-base font-semibold text-white">Is the gym good for beginners?</div>
+              <div className="collapse-content text-sm text-zinc-200">Absolutely, our programs are easy to follow and built for steady progress.</div>
+            </div>
+          </div>
+        </div>
+</section>
+{/* Contact us */}
+<section id="contact" className="relative overflow-hidden bg-zinc-950/95 py-20 px-6 text-white">
+  <div className="mx-auto max-w-6xl text-center">
+    <p className="text-sm uppercase tracking-[0.35em] text-red-400">Contact</p>
+    <h2 className="mt-3 text-3xl font-black md:text-5xl text-white">Get in touch</h2>
+    <p className="mx-auto mt-4 max-w-2xl text-zinc-200">Reach out for support, membership, or training questions.</p>
+    
+<div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16 text-left">
+  
+  {/* Upande wa Kushoto Contact Info */}
+  <div className="flex flex-col gap-8">
+    
+    
+    <div className="flex items-center gap-5">
+      <div className="w-12 h-12 shrink-0 rounded-xl bg-red-500/10 flex items-center justify-center border border-red-500/20">
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+      </div>
+      <div>
+        <h4 className="text-white font-bold text-lg">Location</h4>
+        <p className="text-zinc-400">Westlands, Nairobi, Kenya</p>
+      </div>
+    </div>
+
+  
+    <div className="flex items-center gap-5">
+      <div className="w-12 h-12 shrink-0 rounded-xl bg-red-500/10 flex items-center justify-center border border-red-500/20">
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+      </div>
+      <div>
+        <h4 className="text-white font-bold text-lg">Phone</h4>
+        <p className="text-zinc-400">+254 700 123 456</p>
+      </div>
+    </div>
+
+    <div className="flex items-center gap-5">
+      <div className="w-12 h-12 shrink-0 rounded-xl bg-red-500/10 flex items-center justify-center border border-red-500/20">
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+      </div>
+      <div>
+        <h4 className="text-white font-bold text-lg">Email</h4>
+        <p className="text-zinc-400">info@yakwetugym.com</p>
+      </div>
+    </div>
+
+    <div className="flex items-center gap-5">
+      <div className="w-12 h-12 shrink-0 rounded-xl bg-red-500/10 flex items-center justify-center border border-red-500/20">
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+      </div>
+      <div>
+        <h4 className="text-white font-bold text-lg">Hours</h4>
+        <p className="text-zinc-400 text-sm">Mon–Fri: 5AM–11PM | Sat–Sun: 6AM–10PM</p>
+      </div>
+    </div>
+
+    {/* Social Links */}
+    <div className="flex gap-4 mt-4">
+       {[1,2,3,4,5].map((i) => (
+         <div key={i} className="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center hover:bg-red-600 transition-all cursor-pointer">
+           <div className="w-2 h-2 bg-white rounded-full"></div> {/* Placeholder kwa icons */}
+         </div>
+       ))}
+    </div>
+  </div>
+
+  {/* Upande wa Kulia Form */}
+  <div className="bg-zinc-900/50 p-8 rounded-3xl border border-zinc-800 shadow-xl font-bold">
+    <form className="space-y-6">
+      <div className="space-y-2 font-bold ">
+        <label className="text-sm font-medium text-zinc-400">Name</label>
+        <input type="text" placeholder="Your name" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-white focus:ring-2 focus:ring-red-600 outline-none transition-all" />
+      </div>
+      <div className="space-y-2">
+        <label className="text-sm font-medium text-zinc-400">Email</label>
+        <input type="email" placeholder="Your email" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-white focus:ring-2 focus:ring-red-600 outline-none transition-all" />
+      </div>
+      <div className="space-y-2">
+        <label className="text-sm font-medium text-zinc-400">Message</label>
+        <textarea rows="4" placeholder="Your message" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-white focus:ring-2 focus:ring-red-600 outline-none transition-all resize-none"></textarea>
+      </div>
+      <button className="w-full bg-red-600 hover:bg-red-700 text-white font-black py-4 rounded-xl shadow-lg shadow-red-900/20 transition-all transform hover:scale-[1.02] active:scale-95 uppercase tracking-widest text-sm">
+        Send Message
+      </button>
+    </form>
+  </div>
+
+</div>
+  
+  </div>
+</section>
+
+
+</main>
+
     </>
   )
 }

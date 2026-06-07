@@ -1,5 +1,14 @@
 @import "tailwindcss";
 @plugin "daisyui";
-body{
-line-height: 1.6; 
+
+html {
+  scroll-behavior: smooth;
+}
+
+section {
+  scroll-margin-top: 6rem;
+}
+
+body {
+  line-height: 1.6;
 }
