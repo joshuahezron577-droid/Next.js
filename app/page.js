@@ -1,5 +1,6 @@
     "use client"
    import Script from 'next/script';
+   import Link from 'next/link';
     import { motion, AnimatePresence } from "framer-motion";
     import { useState, useEffect } from 'react';
      const sentences = [
@@ -69,19 +70,21 @@ const reviews = [
     <a href="#faq" className="hover:text-red-500 transition">FAQ</a>
     <a href="#contact" className="hover:text-red-500 transition">Contact us</a>
   </div>
+ {/*  */}
+ <div className="flex items-center gap-6">
+        {/* Link ya Sign In */}
+        <Link href="/sign-in" className="text-zinc-400 hover:text-white transition-colors">
+          Sign In
+        </Link>
 
- <div className="flex items-center gap-4">
-  {/* Button ya Sign In (Secondary) */}
-  <a href="/sign-in" className="btn btn-ghost text-white hover:bg-white/10 rounded-md">
-    Sign In
-  </a>
-
-  {/* Button ya Join Now (Primary) */}
-  <a href="/join" className="btn bg-red-600 hover:bg-red-700 text-white border-none rounded-md px-6">
-    Join Now
-  </a>
-</div>
- 
+        {/* Link ya Join Now */}
+        <Link 
+          href="/join-now" 
+          className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-md transition-all hover:scale-105"
+        >
+          Join Now
+        </Link>
+      </div>
  
  </nav>
   
@@ -117,7 +120,7 @@ const reviews = [
 
 <div className="flex gap-4 justify-center mt-5">
   <a href="#contact" className="border border-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-black transition">
-    Join now
+    Get into touch
   </a>
   <a href="#programs" className="border border-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-black transition">
     Explore programs
