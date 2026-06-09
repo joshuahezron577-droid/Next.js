@@ -1,8 +1,27 @@
 @import "tailwindcss";
 @plugin "daisyui";
+@import "tailwindcss";
 
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #dc2626;
+}
+
+
+html[data-theme="light"], :root {
+  background-color: #ffffff !important; 
+  color: #000000 !important;             
+}
+
+html[data-theme="dark"] {
+  background-color: #000000 !important; 
+  color: #ffffff !important;           
+}
+
+@variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 html {
-  scroll-behavior: smooth;
+transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 section {

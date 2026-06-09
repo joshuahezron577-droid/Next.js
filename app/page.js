@@ -30,6 +30,7 @@ const reviews = [
   export default function Home() {
    const [index, setIndex] = useState(0);
    const [reviewIndex, setReviewIndex] = useState(0);
+   const [activeSection, setActiveSection] = useState('home');
 
   const nextReview = () => {
     setReviewIndex((prev) => (prev + 1) % reviews.length);
@@ -38,6 +39,34 @@ const reviews = [
   const prevReview = () => {
     setReviewIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
   };
+
+  useEffect(() => {
+    const sectionIds = ['home', 'programs', 'team', 'benefits', 'reviews', 'faq', 'contact'];
+
+    const updateActiveSection = () => {
+      const navOffset = 120;
+      const scrollPosition = window.scrollY + navOffset;
+
+      let current = sectionIds[0];
+      for (const id of sectionIds) {
+        const section = document.getElementById(id);
+        if (section && section.offsetTop <= scrollPosition) {
+          current = id;
+        }
+      }
+
+      setActiveSection(current);
+    };
+
+    updateActiveSection();
+    window.addEventListener('scroll', updateActiveSection, { passive: true });
+    window.addEventListener('resize', updateActiveSection);
+
+    return () => {
+      window.removeEventListener('scroll', updateActiveSection);
+      window.removeEventListener('resize', updateActiveSection);
+    };
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -58,21 +87,35 @@ const reviews = [
    <main className="bg-base-300 min-h-screen text-white">
       
       {/* NAVBAR */}
-<nav className="fixed left-0 right-0 top-0 z-50 mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-6 md:px-8 lg:px-10 bg-black/70 backdrop-blur-md rounded-b-2xl border border-white/5 shadow-lg">
+ <nav className="fixed left-0 right-0 top-0 z-50 mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-6 md:px-8 lg:px-10 bg-black/70 backdrop-blur-md rounded-b-2xl border border-white/5 shadow-lg">
   <div className="text-2xl font-bold tracking-tighter"></div>
+  {/*  Themes*/}
+ {/* Navbar.jsx */}
+<div className="flex items-center">
+  <label className="flex cursor-pointer gap-2 items-center">
+    {/* Sun Icon */}
+    <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
+    
+    {/* Hii hapa ndiyo key ya yote */}
+    <input type="checkbox" className="toggle theme-controller" value="dark" />
+    
+    {/* Moon Icon */}
+    <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+  </label>
+</div>
 
   <div className="hidden md:flex flex-1 items-center justify-center gap-4 lg:gap-6 font-medium text-xs lg:text-sm">
-    <a href="#home" className="hover:text-red-500 transition">Home</a>
-    <a href="#programs" className="hover:text-red-500 transition">Our Programs</a>
-    <a href="#team" className="hover:text-red-500 transition">Our Team</a>
-    <a href="#benefits" className="hover:text-red-500 transition">Why choose us</a>
-    <a href="#reviews" className="hover:text-red-500 transition">Reviews</a>
-    <a href="#faq" className="hover:text-red-500 transition">FAQ</a>
-    <a href="#contact" className="hover:text-red-500 transition">Contact us</a>
+    <a href="#home" className={`transition ${activeSection === 'home' ? 'text-red-500' : 'text-white/80 hover:text-red-500'}`}>Home</a>
+    <a href="#programs" className={`transition ${activeSection === 'programs' ? 'text-red-500' : 'text-white/80 hover:text-red-500'}`}>Our Programs</a>
+    <a href="#team" className={`transition ${activeSection === 'team' ? 'text-red-500' : 'text-white/80 hover:text-red-500'}`}>Our Team</a>
+    <a href="#benefits" className={`transition ${activeSection === 'benefits' ? 'text-red-500' : 'text-white/80 hover:text-red-500'}`}>Why choose us</a>
+    <a href="#reviews" className={`transition ${activeSection === 'reviews' ? 'text-red-500' : 'text-white/80 hover:text-red-500'}`}>Reviews</a>
+    <a href="#faq" className={`transition ${activeSection === 'faq' ? 'text-red-500' : 'text-white/80 hover:text-red-500'}`}>FAQ</a>
+    <a href="#contact" className={`transition ${activeSection === 'contact' ? 'text-red-500' : 'text-white/80 hover:text-red-500'}`}>Contact us</a>
   </div>
  {/*  */}
  <div className="flex items-center gap-2 md:gap-3">
-        {/* Link ya Sign In */}
+      
         <Link 
           href="/sign-in" 
           className="bg-red-600 hover:bg-red-700 text-white font-bold py-1.5 px-3 md:px-4 rounded-md transition-all hover:scale-105 text-xs md:text-sm"
@@ -80,7 +123,6 @@ const reviews = [
           Sign In
         </Link>
 
-        {/* Link ya Join Now */}
         <Link 
           href="/join-now" 
           className="bg-red-600 hover:bg-red-700 text-white font-bold py-1.5 px-3 md:px-4 rounded-md transition-all hover:scale-105 text-xs md:text-sm"
@@ -90,7 +132,6 @@ const reviews = [
       </div>
  
  </nav>
-  
       {/* HOME */}
       <section id="home" className="relative h-screen flex flex-col justify-center items-center text-center" >
         <div className="absolute inset-0 z-0">
@@ -261,8 +302,8 @@ const reviews = [
                       <p className="text-lg italic leading-relaxed text-neutral-400 md:text-xl">“{item.quote}”</p>
                     </blockquote>
                     <div className="flex flex-col items-center">
-                      <div className="mb-4 flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border border-red-500 bg-red-600">
-                        <img src="/Images/Image-E.jpg" alt={item.name} className="h-full w-full object-cover" />
+                      <div className="mb-4 flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border border-red-500">
+                        <img src="/Images/Image-E.jpeg" alt={item.name} className="h-full w-full object-cover" loading="lazy" />
                       </div>
                       <h3 className="text-lg font-bold tracking-wide text-white">{item.name}</h3>
                       <p className="text-sm text-neutral-500">{item.since}</p>

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function JoinPage() {
   const [plan, setPlan] = useState("pro"); // State ya Radio button
@@ -7,6 +8,7 @@ export default function JoinPage() {
   return (
     <div className="min-h-screen bg-[#050505] flex items-center justify-center p-6 py-20">
       <div className="w-full max-w-xl bg-zinc-900/40 backdrop-blur-xl border border-zinc-800 p-8 md:p-12 rounded-[2.5rem] shadow-2xl">
+        <Link href="/" className="inline-block text-zinc-400 hover:text-white transition mb-6 text-sm">← Back to Home</Link>
         
         <div className="text-center mb-10">
           <h1 className="text-3xl font-black text-white uppercase tracking-tight">Join Our Community</h1>
@@ -70,7 +72,7 @@ export default function JoinPage() {
 
         <div className="text-center mt-8">
           <p className="text-zinc-500 text-sm">
-            Already a member? <a href="/sign-in" className="text-white hover:text-red-500 transition-colors font-bold">Sign In</a>
+            Already a member? <Link href="/sign-in" className="text-white hover:text-red-500 transition-colors font-bold">Sign In</Link>
           </p>
         </div>
 
