@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link"; // Hii ni muhimu sana
+import Link from "next/link";
 
 export default function SignInPage() {
   return (
@@ -10,6 +10,7 @@ export default function SignInPage() {
       <div className="w-full max-w-md bg-zinc-900/50 backdrop-blur-xl border border-zinc-800 p-8 rounded-3xl shadow-2xl">
         
         <div className="text-center mb-8">
+                
           <h1 className="text-2xl font-black text-white uppercase tracking-tight">Sign In</h1>
           <p className="text-zinc-400 text-sm mt-2">Welcome back to Yakwetu Gym</p>
         </div>
@@ -37,17 +38,15 @@ export default function SignInPage() {
             Login
           </button>
         </form>
-
-        {/* Hapa ndipo kwenye marekebisho ya Join Now */}
         <div className="text-center mt-6">
           <p className="text-zinc-500 text-sm">
             Don't have an account?{" "}
             <Link href="/join-now" className="text-red-500 hover:underline font-semibold">
               Join Now
-            </Link>
+            </Link> 
           </p>
         </div>
-
+    
       </div>
       </main>
     </div>

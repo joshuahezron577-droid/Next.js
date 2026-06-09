@@ -58,7 +58,7 @@ const reviews = [
    <main className="bg-base-300 min-h-screen text-white">
       
       {/* NAVBAR */}
-<nav className="fixed left-0 right-0 top-0 z-50 mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-4 md:px-8 lg:px-10 bg-black/70 backdrop-blur-md rounded-b-2xl border border-white/5 shadow-lg">
+<nav className="fixed left-0 right-0 top-0 z-50 mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-6 md:px-8 lg:px-10 bg-black/70 backdrop-blur-md rounded-b-2xl border border-white/5 shadow-lg">
   <div className="text-2xl font-bold tracking-tighter"></div>
 
   <div className="hidden md:flex flex-1 items-center justify-center gap-4 lg:gap-6 font-medium text-xs lg:text-sm">
@@ -74,7 +74,7 @@ const reviews = [
  <div className="flex items-center gap-2 md:gap-3">
         {/* Link ya Sign In */}
         <Link 
-          href="/join-now" 
+          href="/sign-in" 
           className="bg-red-600 hover:bg-red-700 text-white font-bold py-1.5 px-3 md:px-4 rounded-md transition-all hover:scale-105 text-xs md:text-sm"
         >
           Sign In
@@ -130,22 +130,22 @@ const reviews = [
   </a>
 </div>
 
-<div className="mt-6 flex flex-wrap justify-center gap-4 text-center text-white">
-  <div className="w-44 rounded-3xl bg-zinc-900/80 p-4 border border-white/5">
+<div className="mt-6 flex flex-wrap justify-center gap-4 text-center text-white border border-white/5">
+  <div className="w-44 rounded-3xl bg-zinc-900/80 p-4 ">
     <div className="p-4">
       <p className="text-3xl font-black text-red-400">500+</p>
       <p className="mt-1 text-[11px] uppercase tracking-[0.28em] text-white/90">Active members</p>
     </div>
   </div>
 
-  <div className="w-44 rounded-3xl bg-zinc-900/80 p-4 border border-white/5">
+  <div className="w-44 rounded-3xl bg-zinc-900/80 p-4">
     <div className="p-4">
       <p className="text-3xl font-black text-red-400">20</p>
       <p className="mt-1 text-[11px] uppercase tracking-[0.28em] text-white/90">Expert trainers</p>
     </div>
   </div>
 
-  <div className="w-44 rounded-3xl bg-zinc-900/80 p-4 border border-white/5">
+  <div className="w-44 rounded-3xl bg-zinc-900/80 p-4">
     <div className="p-4">
       <p className="text-3xl font-black text-red-400">24/7</p>
       <p className="mt-1 text-[11px] uppercase tracking-[0.28em] text-white/90">Support & access</p>
@@ -197,15 +197,15 @@ const reviews = [
 
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             {[
-              ['Image-A.jpg', 'Coach Jay', 'Strength Coach'],
-              ['Image-B.jpg', 'Coach Nia', 'Cardio Specialist'],
-              ['Image-C.jpg', 'Coach Leo', 'Recovery Expert'],
+              ['Image-B.jpg', 'Coach Jay', 'Strength Coach'],
+              ['Image-C.jpg', 'Sauti ya zege', 'Cardio Specialist'],
+              ['Image-D.jpg', 'Coach Leo', 'Recovery Expert'],
             ].map(([image, name, role]) => (
               <article
                 key={name}
                 className="overflow-hidden rounded-3xl border border-white/10 bg-zinc-900 shadow-[0_18px_35px_rgba(0,0,0,0.35)] transition duration-300 hover:-translate-y-1 hover:border-red-400/40"
               >
-                <img src={`/Images/${image}`} alt={name} className="h-72 w-full object-cover" />
+                <img src={`/Images/${image}`} alt={name} className="h-[792px] w-full object-cover" />
                 <div className="p-5 text-left">
                   <h3 className="text-xl font-bold text-white">{name}</h3>
                   <p className="mt-1 text-sm uppercase tracking-[0.25em] text-red-300">{role}</p>
@@ -262,7 +262,7 @@ const reviews = [
                     </blockquote>
                     <div className="flex flex-col items-center">
                       <div className="mb-4 flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border border-red-500 bg-red-600">
-                        <span className="text-xs font-bold text-white">IMG</span>
+                        <img src="/Images/Image-E.jpg" alt={item.name} className="h-full w-full object-cover" />
                       </div>
                       <h3 className="text-lg font-bold tracking-wide text-white">{item.name}</h3>
                       <p className="text-sm text-neutral-500">{item.since}</p>
