@@ -1,13 +1,13 @@
-    "use client"
-   import Script from 'next/script';
-   import Link from 'next/link';
-    import { motion, AnimatePresence } from "framer-motion";
-    import { useState, useEffect } from 'react';
-     const sentences = [
+"use client"
+import Link from 'next/link';
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from 'react';
+
+const sentences = [
   "Transforming your physique,",
   "Building sustainable strength,",
   "Reaching your peak fitness."
-]; 
+];
 
 const reviews = [
   {
@@ -27,41 +27,47 @@ const reviews = [
   },
 ];
 
-  export default function Home() {
-   const [index, setIndex] = useState(0);
-   const [reviewIndex, setReviewIndex] = useState(0);
-   const [activeSection, setActiveSection] = useState('home');
+export default function Home() {
+  const [isDark, setIsDark] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [index, setIndex] = useState(0);
+  const [reviewIndex, setReviewIndex] = useState(0);
+  const [activeSection, setActiveSection] = useState('home');
 
-  const nextReview = () => {
-    setReviewIndex((prev) => (prev + 1) % reviews.length);
+  const toggleTheme = () => {
+    const newTheme = isDark ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    setIsDark(!isDark);
   };
 
-  const prevReview = () => {
-    setReviewIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
-  };
+  const nextReview = () => setReviewIndex((prev) => (prev + 1) % reviews.length);
+  const prevReview = () => setReviewIndex((prev) => (prev - 1 + reviews.length) % reviews.length);
+
+  const navLinks = [
+    { href: '#home', label: 'Home', id: 'home' },
+    { href: '#programs', label: 'Our Programs', id: 'programs' },
+    { href: '#team', label: 'Our Team', id: 'team' },
+    { href: '#benefits', label: 'Why choose us', id: 'benefits' },
+    { href: '#reviews', label: 'Reviews', id: 'reviews' },
+    { href: '#faq', label: 'FAQ', id: 'faq' },
+    { href: '#contact', label: 'Contact us', id: 'contact' },
+  ];
 
   useEffect(() => {
     const sectionIds = ['home', 'programs', 'team', 'benefits', 'reviews', 'faq', 'contact'];
-
     const updateActiveSection = () => {
       const navOffset = 120;
       const scrollPosition = window.scrollY + navOffset;
-
       let current = sectionIds[0];
       for (const id of sectionIds) {
         const section = document.getElementById(id);
-        if (section && section.offsetTop <= scrollPosition) {
-          current = id;
-        }
+        if (section && section.offsetTop <= scrollPosition) current = id;
       }
-
       setActiveSection(current);
     };
-
     updateActiveSection();
     window.addEventListener('scroll', updateActiveSection, { passive: true });
     window.addEventListener('resize', updateActiveSection);
-
     return () => {
       window.removeEventListener('scroll', updateActiveSection);
       window.removeEventListener('resize', updateActiveSection);
@@ -69,395 +75,440 @@ const reviews = [
   }, []);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % sentences.length);
-    }, 2500);
+    const timer = setInterval(() => setIndex((prev) => (prev + 1) % sentences.length), 2500);
     return () => clearInterval(timer);
   }, []);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setReviewIndex((prev) => (prev + 1) % reviews.length);
-    }, 3200);
+    const timer = setInterval(() => setReviewIndex((prev) => (prev + 1) % reviews.length), 3200);
     return () => clearInterval(timer);
   }, []);
 
+  const linkClass = (id) =>
+    `transition text-sm font-medium ${activeSection === id ? 'text-red-500' : isDark ? 'text-white/80 hover:text-red-500' : 'text-zinc-800 hover:text-red-500'}`;
+
   return (
     <>
-   <main className="bg-base-300 min-h-screen text-white">
-      
-      {/* NAVBAR */}
- <nav className="fixed left-0 right-0 top-0 z-50 mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-6 md:px-8 lg:px-10 bg-black/70 backdrop-blur-md rounded-b-2xl border border-white/5 shadow-lg">
-  <div className="text-2xl font-bold tracking-tighter"></div>
-  {/*  Themes*/}
- 
-<div className="flex items-center">
-  <label className="flex cursor-pointer gap-2 items-center">
-    <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
-    <input type="checkbox" className="toggle theme-controller" value="dark" />
-    <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-  </label>
-</div>
+      <main className="bg-zinc-950 min-h-screen text-white">
 
-  <div className="hidden md:flex flex-1 items-center justify-center gap-4 lg:gap-6 font-medium text-xs lg:text-sm">
-    <a href="#home" className={`transition ${activeSection === 'home' ? 'text-red-500' : 'text-white/80 hover:text-red-500'}`}>Home</a>
-    <a href="#programs" className={`transition ${activeSection === 'programs' ? 'text-red-500' : 'text-white/80 hover:text-red-500'}`}>Our Programs</a>
-    <a href="#team" className={`transition ${activeSection === 'team' ? 'text-red-500' : 'text-white/80 hover:text-red-500'}`}>Our Team</a>
-    <a href="#benefits" className={`transition ${activeSection === 'benefits' ? 'text-red-500' : 'text-white/80 hover:text-red-500'}`}>Why choose us</a>
-    <a href="#reviews" className={`transition ${activeSection === 'reviews' ? 'text-red-500' : 'text-white/80 hover:text-red-500'}`}>Reviews</a>
-    <a href="#faq" className={`transition ${activeSection === 'faq' ? 'text-red-500' : 'text-white/80 hover:text-red-500'}`}>FAQ</a>
-    <a href="#contact" className={`transition ${activeSection === 'contact' ? 'text-red-500' : 'text-white/80 hover:text-red-500'}`}>Contact us</a>
-  </div>
- {/*  */}
- <div className="flex items-center gap-2 md:gap-3">
-      
-        <Link 
-          href="/sign-in" 
-          className="bg-red-600 hover:bg-red-700 text-white font-bold py-1.5 px-3 md:px-4 rounded-md transition-all hover:scale-105 text-xs md:text-sm"
-        >
-          Sign In
-        </Link>
+        {/* ── NAVBAR ── */}
+        <nav className={`fixed left-0 right-0 top-0 z-50 w-full backdrop-blur-md border-b shadow-lg transition-all duration-300 ${isDark ? 'bg-black/70 border-white/5' : 'bg-white/85 border-black/10'}`}>
+          <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-4 sm:px-6 md:px-8 lg:px-10">
 
-        <Link 
-          href="/join-now" 
-          className="bg-red-600 hover:bg-red-700 text-white font-bold py-1.5 px-3 md:px-4 rounded-md transition-all hover:scale-105 text-xs md:text-sm"
-        >
-          Join Now
-        </Link>
-      </div>
- 
- </nav>
-      {/* HOME */}
-      <section id="home" className="relative h-screen flex flex-col justify-center items-center text-center" >
-        <div className="absolute inset-0 z-0">
-          <img src="/Images/Image-A.jpg" alt="Gym" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black/15"></div>
-        </div>
+            {/* Logo placeholder */}
+            <div className="text-xl sm:text-2xl font-bold tracking-tighter text-red-500">YKG</div>
 
-        <div className="relative z-10 px-4 mt-30">
-          <p className="text-red-500 uppercase tracking-widest text-2xl mb-4 font-bold">Welcome to ya kwetu fitness gyme</p>
-          <h1 className="text-2xl md:text-5xl font-bold mb-6 tracking-tight">
-            Train hard. Stay strong. Become unstoppable.
-          </h1>
-          <p className="max-w-xl mx-auto text-2xl mb-6 text-white">
-            Where champions are made. We help you in<span className='text-white-300 text-3xl'>;</span>
-          </p>
-          <div className="flex justify-center items-center h-5 overflow-hidden text-red-600">
-      <AnimatePresence mode="wait">
-        <motion.p
-          key={index}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.5 }}
-          className="text-2xl text-red-600"
-        >
-          {sentences[index]}
-        </motion.p>
-      </AnimatePresence>
-    </div>
+            {/* Desktop links */}
+            <div className="hidden md:flex flex-1 items-center justify-center gap-3 lg:gap-6">
+              {navLinks.map(({ href, label, id }) => (
+                <a key={id} href={href} className={linkClass(id)}>{label}</a>
+              ))}
+            </div>
 
-<div className="flex gap-4 justify-center mt-5">
-  <a href="#contact" className="border border-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-black transition">
-    Get into touch
-  </a>
-  <a href="#programs" className="border border-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-black transition">
-    Explore programs
-  </a>
-</div>
+            {/* Right side: theme toggle + buttons + hamburger */}
+            <div className="flex items-center gap-2 sm:gap-3">
 
-<div className="mt-6 flex flex-wrap justify-center gap-4 text-center text-white border border-white/5">
-  <div className="w-44 rounded-3xl bg-zinc-900/80 p-4 ">
-    <div className="p-4">
-      <p className="text-3xl font-black text-red-400">500+</p>
-      <p className="mt-1 text-[11px] uppercase tracking-[0.28em] text-white/90">Active members</p>
-    </div>
-  </div>
+              {/* Theme toggle */}
+              <label className="flex cursor-pointer items-center gap-1.5">
+                <svg className={`w-4 h-4 transition-colors ${isDark ? 'text-white/40' : 'text-amber-400'}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
+                <button onClick={toggleTheme} className={`relative w-11 h-6 rounded-full transition-colors duration-300 ${isDark ? 'bg-zinc-700' : 'bg-zinc-300'}`}>
+                  <span className={`absolute top-1 left-1 w-4 h-4 rounded-full shadow transition-all duration-300 bg-white ${isDark ? 'translate-x-0' : 'translate-x-5'}`} />
+                </button>
+                <svg className={`w-4 h-4 transition-colors ${isDark ? 'text-white' : 'text-zinc-400'}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              </label>
 
-  <div className="w-44 rounded-3xl bg-zinc-900/80 p-4">
-    <div className="p-4">
-      <p className="text-3xl font-black text-red-400">20</p>
-      <p className="mt-1 text-[11px] uppercase tracking-[0.28em] text-white/90">Expert trainers</p>
-    </div>
-  </div>
+              {/* Sign In / Join Now — hidden on mobile */}
+              <Link href="/sign-in" className="hidden sm:inline-flex bg-red-600 hover:bg-red-700 text-white font-bold py-1.5 px-3 md:px-4 rounded-md transition-all hover:scale-105 text-xs md:text-sm">
+                Sign In
+              </Link>
+              <Link href="/join-now" className="hidden sm:inline-flex bg-red-600 hover:bg-red-700 text-white font-bold py-1.5 px-3 md:px-4 rounded-md transition-all hover:scale-105 text-xs md:text-sm">
+                Join Now
+              </Link>
 
-  <div className="w-44 rounded-3xl bg-zinc-900/80 p-4">
-    <div className="p-4">
-      <p className="text-3xl font-black text-red-400">24/7</p>
-      <p className="mt-1 text-[11px] uppercase tracking-[0.28em] text-white/90">Support & access</p>
-    </div>
-  </div>
-</div>
-        </div>
-      </section>
-{/* Our programs */}
- <section id="programs" className="relative overflow-hidden bg-zinc-950/95 py-20 px-6 text-white">
-        <div className="mx-auto max-w-7xl text-center">
-          <p className="text-sm uppercase tracking-[0.35em] text-red-400">Our programs</p>
-          <h2 className="mt-3 text-3xl font-black md:text-5xl text-white">What we offer</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-zinc-200">Simple, powerful fitness services built to help you train stronger, recover better, and stay consistent.</p>
-
-          <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-            {[
-              ['⚡', 'Strength Training', 'Build muscle, improve posture, and become stronger every week.'],
-              ['🏃', 'Cardio Burn', 'Boost stamina and endurance with focused heart-pumping sessions.'],
-              ['🧠', 'Recovery Flow', 'Recharge with guided recovery routines and mobility support.'],
-              ['🍎', 'Wellness Coaching', 'Stay consistent with expert advice, nutrition tips, and progress tracking.'],
-              ['🏋️', 'Power Lift', 'Develop explosive strength with disciplined lifting plans and coaching.'],
-              ['🧘', 'Mobility Flow', 'Improve flexibility, posture, and recovery through guided movement sessions.'],
-              ['💧', 'Hydration & Fuel', 'Track your energy, hydration, and nutrition habits for better performance.'],
-              ['📈', 'Progress Tracking', 'Follow your weekly improvements with clear goals and measurable results.'],
-            ].map(([icon, title, text]) => (
-              <article
-                key={title}
-                className="group h-full rounded-3xl border border-white/10 bg-zinc-900 p-3 shadow-[0_16px_30px_rgba(0,0,0,0.35)] transition duration-300 hover:-translate-y-1 hover:border-red-400/40 hover:shadow-[0_20px_35px_rgba(255,0,0,0.14)]"
+              {/* Hamburger — mobile only */}
+              <button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="md:hidden flex flex-col gap-1.5 p-2"
+                aria-label="Toggle menu"
               >
-                <div className="flex h-full flex-col rounded-2xl bg-zinc-800/90 p-5 text-left transition duration-300 group-hover:bg-zinc-800">
-                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-red-500/10 text-xl text-red-300 shadow-inner">{icon}</div>
-                  <h3 className="text-xl font-bold text-white">{title}</h3>
-                  <p className="mt-2 flex-1 text-sm text-zinc-200">{text}</p>
-                  <span className="mt-4 text-xs uppercase tracking-[0.25em] text-red-300">Included</span>
-                </div>
-              </article>
-            ))}
+                <span className={`block w-6 h-0.5 transition-all duration-300 ${isDark ? 'bg-white' : 'bg-zinc-800'} ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+                <span className={`block w-6 h-0.5 transition-all duration-300 ${isDark ? 'bg-white' : 'bg-zinc-800'} ${menuOpen ? 'opacity-0' : ''}`} />
+                <span className={`block w-6 h-0.5 transition-all duration-300 ${isDark ? 'bg-white' : 'bg-zinc-800'} ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+              </button>
+            </div>
           </div>
-        </div>
-      </section>
 
-{/* Our trainers */}
- <section id="team" className="relative overflow-hidden bg-zinc-950/95 py-20 px-6 text-white">
-        <div className="mx-auto max-w-7xl text-center">
-          <p className="text-sm uppercase tracking-[0.35em] text-red-400">Our team</p>
-          <h2 className="mt-3 text-3xl font-black md:text-5xl text-white">Meet the experts trainers</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-zinc-200">Dedicated trainers, coaches, and wellness experts ready to guide you every step of the way.</p>
-
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {[
-              ['Image-B.jpg', 'Coach Jay', 'Strength Coach'],
-              ['Image-C.jpg', 'Sauti ya zege', 'Cardio Specialist'],
-              ['Image-D.jpg', 'Coach Leo', 'Recovery Expert'],
-            ].map(([image, name, role]) => (
-              <article
-                key={name}
-                className="overflow-hidden rounded-3xl border border-white/10 bg-zinc-900 shadow-[0_18px_35px_rgba(0,0,0,0.35)] transition duration-300 hover:-translate-y-1 hover:border-red-400/40"
-              >
-                <img src={`/Images/${image}`} alt={name} className="h-[792px] w-full object-cover" />
-                <div className="p-5 text-left">
-                  <h3 className="text-xl font-bold text-white">{name}</h3>
-                  <p className="mt-1 text-sm uppercase tracking-[0.25em] text-red-300">{role}</p>
-                  <p className="mt-3 text-sm text-zinc-200">Professional trainer focused on results, discipline, and strong coaching.</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Extra programs section */}
-      <section id="benefits" className="relative overflow-hidden bg-zinc-950/95 py-20 px-6 text-white">
-        <div className="mx-auto max-w-6xl text-center">
-          <p className="text-sm uppercase tracking-[0.35em] text-red-400">Why choose us</p>
-          <h2 className="mt-3 text-3xl font-black md:text-5xl text-white">Built for real progress</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-zinc-200">A simple, balanced fitness experience with expert coaching, structure, and motivation to help you stay consistent.</p>
-
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {[
-              ['🔥', 'Focused Training', 'Clear routines and smart guidance to keep every session effective.'],
-              ['💪', 'Strength & Conditioning', 'Build power, stability, and confidence through disciplined workouts.'],
-              ['🌟', 'Long-Term Results', 'Stay motivated with progress-focused coaching and sustainable habits.'],
-            ].map(([icon, title, text]) => (
-              <article key={title} className="rounded-3xl border border-white/10 bg-zinc-900 p-6 text-left shadow-[0_18px_35px_rgba(0,0,0,0.35)]">
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-red-500/10 text-xl text-red-300">{icon}</div>
-                <h3 className="text-xl font-bold text-white">{title}</h3>
-                <p className="mt-2 text-sm text-zinc-200">{text}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Review */}
-      <section id="reviews" className="relative overflow-hidden bg-zinc-950/95 py-20 px-6 text-white">
-        <div className="mx-auto max-w-6xl text-center">
-          <p className="text-sm uppercase tracking-[0.35em] text-red-400">Reviews</p>
-          <h2 className="mt-3 text-3xl font-black md:text-5xl text-white">What our members say</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-zinc-200">Real feedback from people who trust our training, support, and results-driven approach.</p>
-
-          <div className="mt-10 flex flex-col items-center justify-center rounded-3xl bg-neutral-950 p-6 font-sans shadow-[0_18px_35px_rgba(0,0,0,0.35)]">
-            <div className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-neutral-800 bg-[#1a1a1a] p-8 shadow-2xl md:p-12">
+          {/* Mobile dropdown menu */}
+          <AnimatePresence>
+            {menuOpen && (
               <motion.div
-                className="flex"
-                animate={{ x: `-${reviewIndex * 100}%` }}
-                transition={{ duration: 0.6, ease: 'easeInOut' }}
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className={`md:hidden overflow-hidden border-t ${isDark ? 'bg-black/90 border-white/10' : 'bg-white/95 border-black/10'}`}
               >
-                {reviews.map((item) => (
-                  <article key={item.name} className="min-w-full text-center">
-                    <div className="mb-6 flex justify-center gap-1 text-xl text-amber-400">★★★★★</div>
-                    <blockquote className="mb-10">
-                      <p className="text-lg italic leading-relaxed text-neutral-400 md:text-xl">“{item.quote}”</p>
-                    </blockquote>
-                    <div className="flex flex-col items-center">
-                      <div className="mb-4 flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border border-red-500">
-                        <img src="/Images/Image-E.jpeg" alt={item.name} className="h-full w-full object-cover" loading="lazy" />
-                      </div>
-                      <h3 className="text-lg font-bold tracking-wide text-white">{item.name}</h3>
-                      <p className="text-sm text-neutral-500">{item.since}</p>
-                    </div>
-                  </article>
-                ))}
+                <div className="flex flex-col px-4 py-4 gap-3">
+                  {navLinks.map(({ href, label, id }) => (
+                    <a
+                      key={id}
+                      href={href}
+                      onClick={() => setMenuOpen(false)}
+                      className={`py-2 text-sm font-medium border-b ${isDark ? 'border-white/5' : 'border-black/5'} ${activeSection === id ? 'text-red-500' : isDark ? 'text-white/80' : 'text-zinc-800'}`}
+                    >
+                      {label}
+                    </a>
+                  ))}
+                  <div className="flex gap-3 mt-2">
+                    <Link href="/sign-in" onClick={() => setMenuOpen(false)} className="flex-1 text-center bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md text-sm">Sign In</Link>
+                    <Link href="/join-now" onClick={() => setMenuOpen(false)} className="flex-1 text-center bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md text-sm">Join Now</Link>
+                  </div>
+                </div>
               </motion.div>
+            )}
+          </AnimatePresence>
+        </nav>
+
+        {/* ── HOME ── */}
+        <section id="home" className="relative min-h-screen flex flex-col justify-center items-center text-center">
+          <div
+            className="absolute inset-0 z-0"
+            style={{
+              backgroundImage: 'url(/Images/Image-A.jpg)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundAttachment: 'fixed',
+            }}
+          >
+            <div className="absolute inset-0 bg-black/40" />
+          </div>
+
+          <div className="relative z-10 px-4 sm:px-6 mt-20 sm:mt-24 md:mt-28">
+            <p className="text-red-500 uppercase tracking-widest text-base sm:text-lg md:text-2xl mb-3 sm:mb-4 font-bold">
+              Welcome to ya kwetu fitness gym
+            </p>
+            <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 tracking-tight">
+              Train hard. Stay strong. Become unstoppable.
+            </h1>
+            <p className="max-w-xl mx-auto text-base sm:text-lg md:text-2xl mb-4 sm:mb-6 text-white/90">
+              Where champions are made. We help you in;
+            </p>
+
+            <div className="flex justify-center items-center h-8 overflow-hidden">
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={index}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.5 }}
+                  className="text-lg sm:text-xl md:text-2xl text-red-500 font-semibold"
+                >
+                  {sentences[index]}
+                </motion.p>
+              </AnimatePresence>
             </div>
 
-            <div className="mt-8 flex items-center gap-6">
-              <button onClick={prevReview} className="flex h-12 w-12 items-center justify-center rounded-full border border-neutral-800 text-white transition-colors hover:bg-neutral-800 cursor-pointer">←</button>
-              <div className="flex gap-2">
-                {reviews.map((item, index) => (
-                  <button
-                    key={item.name}
-                    onClick={() => setReviewIndex(index)}
-                    className={`h-2.5 w-2.5 rounded-full ${reviewIndex === index ? 'bg-red-500' : 'bg-neutral-700'}`}
-                    aria-label={`Go to review ${index + 1}`}
-                  />
-                ))}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center mt-6 sm:mt-8">
+              <a href="#contact" className="border border-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold hover:bg-white hover:text-black transition text-sm sm:text-base">
+                Get in touch
+              </a>
+              <a href="#programs" className="border border-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold hover:bg-white hover:text-black transition text-sm sm:text-base">
+                Explore programs
+              </a>
+            </div>
+
+            <div className="mt-6 sm:mt-8 flex flex-wrap justify-center gap-3 sm:gap-4 text-center text-white">
+              {[['500+', 'Active members'], ['20', 'Expert trainers'], ['24/7', 'Support & access']].map(([val, label]) => (
+                <div key={label} className="w-36 sm:w-40 md:w-44 rounded-3xl bg-zinc-900/80 p-3 sm:p-4">
+                  <p className="text-2xl sm:text-3xl font-black text-red-400">{val}</p>
+                  <p className="mt-1 text-[10px] sm:text-[11px] uppercase tracking-[0.28em] text-white/90">{label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── OUR PROGRAMS ── */}
+        <section id="programs" className="relative overflow-hidden bg-zinc-950/95 py-14 sm:py-16 md:py-20 px-4 sm:px-6 text-white">
+          <div className="mx-auto max-w-7xl text-center">
+            <p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-red-400">Our programs</p>
+            <h2 className="mt-3 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white">What we offer</h2>
+            <p className="mx-auto mt-3 sm:mt-4 max-w-2xl text-sm sm:text-base text-zinc-200">
+              Simple, powerful fitness services built to help you train stronger, recover better, and stay consistent.
+            </p>
+
+            <div className="mt-8 sm:mt-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
+              {[
+                ['⚡', 'Strength Training', 'Build muscle, improve posture, and become stronger every week.'],
+                ['🏃', 'Cardio Burn', 'Boost stamina and endurance with focused heart-pumping sessions.'],
+                ['🧠', 'Recovery Flow', 'Recharge with guided recovery routines and mobility support.'],
+                ['🍎', 'Wellness Coaching', 'Stay consistent with expert advice, nutrition tips, and progress tracking.'],
+                ['🏋️', 'Power Lift', 'Develop explosive strength with disciplined lifting plans and coaching.'],
+                ['🧘', 'Mobility Flow', 'Improve flexibility, posture, and recovery through guided movement sessions.'],
+                ['💧', 'Hydration & Fuel', 'Track your energy, hydration, and nutrition habits for better performance.'],
+                ['📈', 'Progress Tracking', 'Follow your weekly improvements with clear goals and measurable results.'],
+              ].map(([icon, title, text]) => (
+                <article
+                  key={title}
+                  className="group h-full rounded-3xl border border-white/10 bg-zinc-900 p-3 shadow-[0_16px_30px_rgba(0,0,0,0.35)] transition duration-300 hover:-translate-y-1 hover:border-red-400/40 hover:shadow-[0_20px_35px_rgba(255,0,0,0.14)]"
+                >
+                  <div className="flex h-full flex-col rounded-2xl bg-zinc-800/90 p-4 sm:p-5 text-left transition duration-300 group-hover:bg-zinc-800">
+                    <div className="mb-3 sm:mb-4 inline-flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-red-500/10 text-lg sm:text-xl text-red-300 shadow-inner">{icon}</div>
+                    <h3 className="text-base sm:text-xl font-bold text-white">{title}</h3>
+                    <p className="mt-2 flex-1 text-xs sm:text-sm text-zinc-200">{text}</p>
+                    <span className="mt-3 sm:mt-4 text-xs uppercase tracking-[0.25em] text-red-300">Included</span>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── OUR TRAINERS ── */}
+        <section id="team" className="relative overflow-hidden bg-zinc-950/95 py-14 sm:py-16 md:py-20 px-4 sm:px-6 text-white">
+          <div className="mx-auto max-w-7xl text-center">
+            <p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-red-400">Our team</p>
+            <h2 className="mt-3 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white">Meet the expert trainers</h2>
+            <p className="mx-auto mt-3 sm:mt-4 max-w-2xl text-sm sm:text-base text-zinc-200">
+              Dedicated trainers, coaches, and wellness experts ready to guide you every step of the way.
+            </p>
+
+            <div className="mt-8 sm:mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+              {[
+                ['Image-B.jpg', 'Coach Jay', 'Strength Coach', '20%'],
+                ['Image-C.jpg', 'Sauti ya zege', 'Cardio Specialist', '20%'],
+                ['Image-D.jpg', 'Coach Leo', 'Recovery Expert', '20%'],
+              ].map(([image, name, role, posY]) => (
+                <article
+                  key={name}
+                  className="overflow-hidden rounded-3xl border border-white/10 bg-zinc-900 shadow-[0_18px_35px_rgba(0,0,0,0.35)] transition duration-300 hover:-translate-y-1 hover:border-red-400/40"
+                >
+                  <div className="relative w-full h-64 sm:h-80 md:h-[420px] overflow-hidden">
+                    <img
+                      src={`/Images/${image}`}
+                      alt={name}
+                      className="w-full h-full object-cover"
+                      style={{ objectPosition: `center ${posY}` }}
+                    />
+                  </div>
+                  <div className="p-4 sm:p-5 text-left">
+                    <h3 className="text-lg sm:text-xl font-bold text-white">{name}</h3>
+                    <p className="mt-1 text-xs sm:text-sm uppercase tracking-[0.25em] text-red-300">{role}</p>
+                    <p className="mt-2 sm:mt-3 text-xs sm:text-sm text-zinc-200">Professional trainer focused on results, discipline, and strong coaching.</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── WHY CHOOSE US ── */}
+        <section id="benefits" className="relative overflow-hidden bg-zinc-950/95 py-14 sm:py-16 md:py-20 px-4 sm:px-6 text-white">
+          <div className="mx-auto max-w-6xl text-center">
+            <p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-red-400">Why choose us</p>
+            <h2 className="mt-3 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white">Built for real progress</h2>
+            <p className="mx-auto mt-3 sm:mt-4 max-w-2xl text-sm sm:text-base text-zinc-200">
+              A simple, balanced fitness experience with expert coaching, structure, and motivation to help you stay consistent.
+            </p>
+
+            <div className="mt-8 sm:mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+              {[
+                ['🔥', 'Focused Training', 'Clear routines and smart guidance to keep every session effective.'],
+                ['💪', 'Strength & Conditioning', 'Build power, stability, and confidence through disciplined workouts.'],
+                ['🌟', 'Long-Term Results', 'Stay motivated with progress-focused coaching and sustainable habits.'],
+              ].map(([icon, title, text]) => (
+                <article key={title} className="rounded-3xl border border-white/10 bg-zinc-900 p-5 sm:p-6 text-left shadow-[0_18px_35px_rgba(0,0,0,0.35)]">
+                  <div className="mb-3 sm:mb-4 inline-flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-2xl bg-red-500/10 text-lg sm:text-xl text-red-300">{icon}</div>
+                  <h3 className="text-base sm:text-xl font-bold text-white">{title}</h3>
+                  <p className="mt-2 text-xs sm:text-sm text-zinc-200">{text}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── REVIEWS ── */}
+        <section id="reviews" className="relative overflow-hidden bg-zinc-950/95 py-14 sm:py-16 md:py-20 px-4 sm:px-6 text-white">
+          <div className="mx-auto max-w-6xl text-center">
+            <p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-red-400">Reviews</p>
+            <h2 className="mt-3 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white">What our members say</h2>
+            <p className="mx-auto mt-3 sm:mt-4 max-w-2xl text-sm sm:text-base text-zinc-200">
+              Real feedback from people who trust our training, support, and results-driven approach.
+            </p>
+
+            <div className="mt-8 sm:mt-10 flex flex-col items-center justify-center rounded-3xl bg-neutral-950 p-4 sm:p-6 font-sans shadow-[0_18px_35px_rgba(0,0,0,0.35)]">
+              <div className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-neutral-800 bg-[#1a1a1a] p-6 sm:p-8 md:p-12 shadow-2xl">
+                <motion.div
+                  className="flex"
+                  animate={{ x: `-${reviewIndex * 100}%` }}
+                  transition={{ duration: 0.6, ease: 'easeInOut' }}
+                >
+                  {reviews.map((item) => (
+                    <article key={item.name} className="min-w-full text-center">
+                      <div className="mb-4 sm:mb-6 flex justify-center gap-1 text-lg sm:text-xl text-amber-400">★★★★★</div>
+                      <blockquote className="mb-6 sm:mb-10">
+                        <p className="text-base sm:text-lg md:text-xl italic leading-relaxed text-neutral-400">"{item.quote}"</p>
+                      </blockquote>
+                      <div className="flex flex-col items-center">
+                        <div className="mb-3 sm:mb-4 flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center overflow-hidden rounded-full border border-red-500">
+                          <img src="/Images/Image-E.jpeg" alt={item.name} className="h-full w-full object-cover" loading="lazy" />
+                        </div>
+                        <h3 className="text-base sm:text-lg font-bold tracking-wide text-white">{item.name}</h3>
+                        <p className="text-xs sm:text-sm text-neutral-500">{item.since}</p>
+                      </div>
+                    </article>
+                  ))}
+                </motion.div>
               </div>
-              <button onClick={nextReview} className="flex h-12 w-12 items-center justify-center rounded-full border border-neutral-800 text-white transition-colors hover:bg-neutral-800 cursor-pointer">→</button>
+
+              <div className="mt-6 sm:mt-8 flex items-center gap-4 sm:gap-6">
+                <button onClick={prevReview} className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full border border-neutral-800 text-white transition-colors hover:bg-neutral-800 cursor-pointer text-sm sm:text-base">←</button>
+                <div className="flex gap-2">
+                  {reviews.map((item, i) => (
+                    <button
+                      key={item.name}
+                      onClick={() => setReviewIndex(i)}
+                      className={`h-2 w-2 sm:h-2.5 sm:w-2.5 rounded-full ${reviewIndex === i ? 'bg-red-500' : 'bg-neutral-700'}`}
+                      aria-label={`Go to review ${i + 1}`}
+                    />
+                  ))}
+                </div>
+                <button onClick={nextReview} className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full border border-neutral-800 text-white transition-colors hover:bg-neutral-800 cursor-pointer text-sm sm:text-base">→</button>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-  {/* FAQ */}
-  <section id="faq" className="relative overflow-hidden bg-zinc-950/95 py-20 px-6 text-white">
-        <div className="mx-auto max-w-6xl text-center">
-          <p className="text-sm uppercase tracking-[0.35em] text-red-400">FAQ</p>
-          <h2 className="mt-3 text-3xl font-black md:text-5xl text-white">Frequently asked questions</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-zinc-200">Short answers about our gym, training, and support.</p>
+        </section>
 
-          <div className="mx-auto mt-10 max-w-3xl space-y-4 text-left">
-            <div className="collapse collapse-plus rounded-2xl border border-white/10 bg-zinc-900 text-white shadow-[0_18px_35px_rgba(0,0,0,0.35)]">
-              <input type="radio" name="faq-accordion" defaultChecked />
-              <div className="collapse-title text-base font-semibold text-white">Do you offer 24/7 gym access?</div>
-              <div className="collapse-content text-sm text-zinc-200">Yes, members can train whenever it suits them with flexible access and support.</div>
-            </div>
+        {/* ── FAQ ── */}
+        <section id="faq" className="relative overflow-hidden bg-zinc-950/95 py-14 sm:py-16 md:py-20 px-4 sm:px-6 text-white">
+          <div className="mx-auto max-w-6xl text-center">
+            <p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-red-400">FAQ</p>
+            <h2 className="mt-3 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white">Frequently asked questions</h2>
+            <p className="mx-auto mt-3 sm:mt-4 max-w-2xl text-sm sm:text-base text-zinc-200">Short answers about our gym, training, and support.</p>
 
-            <div className="collapse collapse-plus rounded-2xl border border-white/10 bg-zinc-900 text-white shadow-[0_18px_35px_rgba(0,0,0,0.35)]">
-              <input type="radio" name="faq-accordion" />
-              <div className="collapse-title text-base font-semibold text-white">Do you have expert trainers?</div>
-              <div className="collapse-content text-sm text-zinc-200">Yes, our coaches guide every session with simple, effective fitness support.</div>
-            </div>
-
-            <div className="collapse collapse-plus rounded-2xl border border-white/10 bg-zinc-900 text-white shadow-[0_18px_35px_rgba(0,0,0,0.35)]">
-              <input type="radio" name="faq-accordion" />
-              <div className="collapse-title text-base font-semibold text-white">Is the gym good for beginners?</div>
-              <div className="collapse-content text-sm text-zinc-200">Absolutely, our programs are easy to follow and built for steady progress.</div>
+            <div className="mx-auto mt-8 sm:mt-10 max-w-3xl space-y-3 sm:space-y-4 text-left">
+              {[
+                ['Do you offer 24/7 gym access?', 'Yes, members can train whenever it suits them with flexible access and support.'],
+                ['Do you have expert trainers?', 'Yes, our coaches guide every session with simple, effective fitness support.'],
+                ['Is the gym good for beginners?', 'Absolutely, our programs are easy to follow and built for steady progress.'],
+              ].map(([q, a], i) => (
+                <div key={q} className="collapse collapse-plus rounded-2xl border border-white/10 bg-zinc-900 text-white shadow-[0_18px_35px_rgba(0,0,0,0.35)]">
+                  <input type="radio" name="faq-accordion" defaultChecked={i === 0} />
+                  <div className="collapse-title text-sm sm:text-base font-semibold text-white">{q}</div>
+                  <div className="collapse-content text-xs sm:text-sm text-zinc-200">{a}</div>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-</section>
-{/* Contact us */}
-<section id="contact" className="relative overflow-hidden bg-zinc-950/95 py-20 px-6 text-white">
-  <div className="mx-auto max-w-6xl text-center">
-    <p className="text-sm uppercase tracking-[0.35em] text-red-400">Contact us</p>
-    <h2 className="mt-3 text-3xl font-black md:text-5xl text-white">Get in touch</h2>
-    <p className="mx-auto mt-4 max-w-2xl text-zinc-200">Reach out for support, membership, or training questions.</p>
-    
-<div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-16 text-left">
-  
-  {/* Upande wa Kushoto Contact Info */}
-  <div className="flex flex-col gap-8">
-    
-    
-    <div className="flex items-center gap-5">
-      <div className="w-12 h-12 shrink-0 rounded-xl bg-red-500/10 flex items-center justify-center border border-red-500/20">
-        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-      </div>
-      <div>
-        <h4 className="text-white font-bold text-lg">Location</h4>
-        <p className="text-zinc-400">Westlands, Nairobi, Kenya</p>
-      </div>
-    </div>
+        </section>
 
-  
-    <div className="flex items-center gap-5">
-      <div className="w-12 h-12 shrink-0 rounded-xl bg-red-500/10 flex items-center justify-center border border-red-500/20">
-        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-      </div>
-      <div>
-        <h4 className="text-white font-bold text-lg">Phone</h4>
-        <p className="text-zinc-400">+254 700 123 456</p>
-      </div>
-    </div>
+        {/* ── CONTACT ── */}
+        <section id="contact" className="relative overflow-hidden bg-zinc-950/95 py-14 sm:py-16 md:py-20 px-4 sm:px-6 text-white">
+          <div className="mx-auto max-w-6xl text-center">
+            <p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-red-400">Contact us</p>
+            <h2 className="mt-3 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white">Get in touch</h2>
+            <p className="mx-auto mt-3 sm:mt-4 max-w-2xl text-sm sm:text-base text-zinc-200">Reach out for support, membership, or training questions.</p>
 
-    <div className="flex items-center gap-5">
-      <div className="w-12 h-12 shrink-0 rounded-xl bg-red-500/10 flex items-center justify-center border border-red-500/20">
-        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-      </div>
-      <div>
-        <h4 className="text-white font-bold text-lg">Email</h4>
-        <p className="text-zinc-400">info@yakwetugym.com</p>
-      </div>
-    </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 mt-10 sm:mt-16 text-left">
 
-    <div className="flex items-center gap-5">
-      <div className="w-12 h-12 shrink-0 rounded-xl bg-red-500/10 flex items-center justify-center border border-red-500/20">
-        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-      </div>
-      <div>
-        <h4 className="text-white font-bold text-lg">Hours</h4>
-        <p className="text-zinc-400 text-sm">Mon–Fri: 5AM–11PM | Sat–Sun: 6AM–10PM</p>
-      </div>
-    </div>
+              {/* Contact Info */}
+              <div className="flex flex-col gap-6 sm:gap-8">
+                {[
+                  {
+                    icon: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />,
+                    icon2: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />,
+                    title: 'Location', value: 'Westlands, Nairobi, Kenya', fill: false
+                  },
+                ].map(() => null)}
 
-    {/* Social Links */}
-    <div className="flex gap-4 mt-4">
-       {[1,2,3,4,5].map((i) => (
-         <div key={i} className="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center hover:bg-red-600 transition-all cursor-pointer">
-           <div className="w-2 h-2 bg-white rounded-full"></div> {/* Placeholder kwa icons */}
-         </div>
-       ))}
-    </div>
+                <div className="flex items-center gap-4 sm:gap-5">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-xl bg-red-500/10 flex items-center justify-center border border-red-500/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 sm:w-6 sm:h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold text-base sm:text-lg">Location</h4>
+                    <p className="text-zinc-400 text-sm">Westlands, Nairobi, Kenya</p>
+                  </div>
+                </div>
 
-    <div className="mt-8 overflow-hidden rounded-3xl border border-white/10 bg-zinc-900 shadow-inner">
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15866.951123233079!2d39.20174503551913!3d-6.165859608466225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185cd0ed505c4db5%3A0x4c7c279dbfb4dd33!2sKariakoo%2C%20Zanzibar!5e0!3m2!1sen!2stz!4v1781083219686!5m2!1sen!2stz"
-        className="h-72 w-full"
-        style={{ border: 0 }}
-        allowFullScreen=""
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-        title="Kariakoo Zanzibar Map"
-      />
-    </div>
-  </div>
+                <div className="flex items-center gap-4 sm:gap-5">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-xl bg-red-500/10 flex items-center justify-center border border-red-500/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 sm:w-6 sm:h-6 text-red-600" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold text-base sm:text-lg">Phone</h4>
+                    <p className="text-zinc-400 text-sm">+254 700 123 456</p>
+                  </div>
+                </div>
 
-  {/* Upande wa Kulia Form */}
-  <div className="bg-zinc-900/50 p-8 rounded-3xl border border-zinc-800 shadow-xl font-bold">
-    <form className="space-y-6">
-      <div className="space-y-2 font-bold ">
-        <label className="text-sm font-medium text-zinc-400">Name</label>
-        <input type="text" placeholder="Your name" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-white focus:ring-2 focus:ring-red-600 outline-none transition-all" />
-      </div>
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-zinc-400">Email</label>
-        <input type="email" placeholder="Your email" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-white focus:ring-2 focus:ring-red-600 outline-none transition-all" />
-      </div>
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-zinc-400">Message</label>
-        <textarea rows="4" placeholder="Your message" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-white focus:ring-2 focus:ring-red-600 outline-none transition-all resize-none"></textarea>
-      </div>
-      <button className="w-full bg-red-600 hover:bg-red-700 text-white font-black py-4 rounded-xl shadow-lg shadow-red-900/20 transition-all transform hover:scale-[1.02] active:scale-95 uppercase tracking-widest text-sm">
-        Send Message
-      </button>
-    </form>
-  </div>
+                <div className="flex items-center gap-4 sm:gap-5">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-xl bg-red-500/10 flex items-center justify-center border border-red-500/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 sm:w-6 sm:h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold text-base sm:text-lg">Email</h4>
+                    <p className="text-zinc-400 text-sm">info@yakwetugym.com</p>
+                  </div>
+                </div>
 
-</div>
-  
-  </div>
-</section>
+                <div className="flex items-center gap-4 sm:gap-5">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-xl bg-red-500/10 flex items-center justify-center border border-red-500/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 sm:w-6 sm:h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  </div>
+                  <div>
+                    <h4 className="text-white font-bold text-base sm:text-lg">Hours</h4>
+                    <p className="text-zinc-400 text-xs sm:text-sm">Mon–Fri: 5AM–11PM | Sat–Sun: 6AM–10PM</p>
+                  </div>
+                </div>
 
+                <div className="flex gap-3 sm:gap-4">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <div key={i} className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center hover:bg-red-600 transition-all cursor-pointer">
+                      <div className="w-2 h-2 bg-white rounded-full" />
+                    </div>
+                  ))}
+                </div>
 
-</main>
+                <div className="overflow-hidden rounded-3xl border border-white/10 bg-zinc-900 shadow-inner">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15866.951123233079!2d39.20174503551913!3d-6.165859608466225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185cd0ed505c4db5%3A0x4c7c279dbfb4dd33!2sKariakoo%2C%20Zanzibar!5e0!3m2!1sen!2stz!4v1781083219686!5m2!1sen!2stz"
+                    className="h-56 sm:h-72 w-full"
+                    style={{ border: 0 }}
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Kariakoo Zanzibar Map"
+                  />
+                </div>
+              </div>
 
+              {/* Contact Form */}
+              <div className="bg-zinc-900/50 p-6 sm:p-8 rounded-3xl border border-zinc-800 shadow-xl">
+                <form className="space-y-5 sm:space-y-6">
+                  <div className="space-y-2">
+                    <label className="text-xs sm:text-sm font-medium text-zinc-400">Name</label>
+                    <input type="text" placeholder="Your name" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 sm:p-4 text-white text-sm focus:ring-2 focus:ring-red-600 outline-none transition-all" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs sm:text-sm font-medium text-zinc-400">Email</label>
+                    <input type="email" placeholder="Your email" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 sm:p-4 text-white text-sm focus:ring-2 focus:ring-red-600 outline-none transition-all" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs sm:text-sm font-medium text-zinc-400">Message</label>
+                    <textarea rows="4" placeholder="Your message" className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 sm:p-4 text-white text-sm focus:ring-2 focus:ring-red-600 outline-none transition-all resize-none" />
+                  </div>
+                  <button className="w-full bg-red-600 hover:bg-red-700 text-white font-black py-3 sm:py-4 rounded-xl shadow-lg shadow-red-900/20 transition-all transform hover:scale-[1.02] active:scale-95 uppercase tracking-widest text-xs sm:text-sm">
+                    Send Message
+                  </button>
+                </form>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+      </main>
     </>
   )
 }
