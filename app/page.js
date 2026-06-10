@@ -90,14 +90,10 @@ export default function Home() {
   return (
     <>
       <main className="bg-zinc-950 min-h-screen text-white">
-
         {/* ── NAVBAR ── */}
         <nav className={`fixed left-0 right-0 top-0 z-50 w-full backdrop-blur-md border-b shadow-lg transition-all duration-300 ${isDark ? 'bg-black/70 border-white/5' : 'bg-white/85 border-black/10'}`}>
           <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-4 sm:px-6 md:px-8 lg:px-10">
-
-            {/* Logo placeholder */}
-            <div className="text-xl sm:text-2xl font-bold tracking-tighter text-red-500">YKG</div>
-
+            <div className="text-xl sm:text-2xl font-bold tracking-tighter text-red-500">Ya kwetugym</div>
             {/* Desktop links */}
             <div className="hidden md:flex flex-1 items-center justify-center gap-3 lg:gap-6">
               {navLinks.map(({ href, label, id }) => (
@@ -117,7 +113,6 @@ export default function Home() {
                 <svg className={`w-4 h-4 transition-colors ${isDark ? 'text-white' : 'text-zinc-400'}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
               </label>
 
-              {/* Sign In / Join Now — hidden on mobile */}
               <Link href="/sign-in" className="hidden sm:inline-flex bg-red-600 hover:bg-red-700 text-white font-bold py-1.5 px-3 md:px-4 rounded-md transition-all hover:scale-105 text-xs md:text-sm">
                 Sign In
               </Link>
@@ -284,7 +279,7 @@ export default function Home() {
                   key={name}
                   className="overflow-hidden rounded-3xl border border-white/10 bg-zinc-900 shadow-[0_18px_35px_rgba(0,0,0,0.35)] transition duration-300 hover:-translate-y-1 hover:border-red-400/40"
                 >
-                  <div className="relative w-full h-64 sm:h-80 md:h-[420px] overflow-hidden">
+                  <div className="relative w-full h-64 sm:h-80 md:h- [420px] overflow-hidden">
                     <img
                       src={`/Images/${image}`}
                       alt={name}
