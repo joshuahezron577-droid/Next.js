@@ -271,20 +271,19 @@ export default function Home() {
 
             <div className="mt-8 sm:mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
               {[
-                ['Image-B.jpg', 'Coach Jay', 'Strength Coach', '20%'],
-                ['Image-C.jpg', 'Sauti ya zege', 'Cardio Specialist', '20%'],
-                ['Image-D.jpg', 'Coach Leo', 'Recovery Expert', '20%'],
+                ['Image-B.jpg', 'Coach Jay', 'Strength Coach', 'top'],
+                ['Image-C.jpg', 'Sauti ya zege', 'Cardio Specialist', 'top'],
+                ['Image-D.jpg', 'Coach Leo', 'Recovery Expert', 'top'],
               ].map(([image, name, role, posY]) => (
                 <article
                   key={name}
                   className="overflow-hidden rounded-3xl border border-white/10 bg-zinc-900 shadow-[0_18px_35px_rgba(0,0,0,0.35)] transition duration-300 hover:-translate-y-1 hover:border-red-400/40"
                 >
-                  <div className="relative w-full h-64 sm:h-80 md:h- [420px] overflow-hidden">
+                  <div className="relative w-full h-64 sm:h-80 md:h-[420px] overflow-hidden">
                     <img
                       src={`/Images/${image}`}
                       alt={name}
-                      className="w-full h-full object-cover"
-                      style={{ objectPosition: `center ${posY}` }}
+                      className="w-full h-full object-cover object-top"
                     />
                   </div>
                   <div className="p-4 sm:p-5 text-left">
