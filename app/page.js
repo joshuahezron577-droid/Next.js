@@ -6,13 +6,13 @@
      const sentences = [
   "Transforming your physique,",
   "Building sustainable strength,",
-  "Reaching your peak fitness potential."
+  "Reaching your peak fitness."
 ]; 
 
 const reviews = [
   {
-    quote: "The coaching feels personal and motivating. I have seen real progress in just a few weeks.",
-    name: "Sarah M.",
+    quote: "The coaching feels personal and motivating. I have seen real progress.",
+    name: "Johans N.",
     since: "Member since 2023",
   },
   {
@@ -22,7 +22,7 @@ const reviews = [
   },
   {
     quote: "Every session is focused, professional, and helps me feel stronger every day.",
-    name: "Aisha T.",
+    name: "Ali T.",
     since: "Member since 2003",
   },
 ];
@@ -90,16 +90,11 @@ const reviews = [
  <nav className="fixed left-0 right-0 top-0 z-50 mx-auto flex w-full max-w-7xl items-center justify-between gap-3 px-4 py-6 md:px-8 lg:px-10 bg-black/70 backdrop-blur-md rounded-b-2xl border border-white/5 shadow-lg">
   <div className="text-2xl font-bold tracking-tighter"></div>
   {/*  Themes*/}
- {/* Navbar.jsx */}
+ 
 <div className="flex items-center">
   <label className="flex cursor-pointer gap-2 items-center">
-    {/* Sun Icon */}
     <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
-    
-    {/* Hii hapa ndiyo key ya yote */}
     <input type="checkbox" className="toggle theme-controller" value="dark" />
-    
-    {/* Moon Icon */}
     <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
   </label>
 </div>
@@ -419,6 +414,18 @@ const reviews = [
            <div className="w-2 h-2 bg-white rounded-full"></div> {/* Placeholder kwa icons */}
          </div>
        ))}
+    </div>
+
+    <div className="mt-8 overflow-hidden rounded-3xl border border-white/10 bg-zinc-900 shadow-inner">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15866.951123233079!2d39.20174503551913!3d-6.165859608466225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185cd0ed505c4db5%3A0x4c7c279dbfb4dd33!2sKariakoo%2C%20Zanzibar!5e0!3m2!1sen!2stz!4v1781083219686!5m2!1sen!2stz"
+        className="h-72 w-full"
+        style={{ border: 0 }}
+        allowFullScreen=""
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        title="Kariakoo Zanzibar Map"
+      />
     </div>
   </div>
 
